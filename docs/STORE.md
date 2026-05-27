@@ -22,8 +22,9 @@
 
 ## 2. 详细描述（Detailed description, ~10k char allowed）
 
-> ⚠ 上架前替换 `<repo URL>` 与 `<site URL>` 为真实链接（演示站部署后才有 site URL，
->   见 [DEPLOY.md](DEPLOY.md)）。
+> 仓库与演示站已上线：
+> - Repo: https://github.com/telagod/hearth-ext
+> - Site: https://telagod.github.io/hearth-ext/
 
 ```
 Your reading, remembered. Quietly.
@@ -50,7 +51,7 @@ PRIVACY YOU CAN INSPECT
 - Past 7 days of every external call is shown in Settings, with byte counts.
 - Cloud LLM calls require explicit consent re-confirmed every 24 hours.
 - Banks, mail, accounts, and other sensitive hosts are excluded by default.
-- Open source under the MIT license — read the code at <repo URL>.
+- Open source under the MIT license — read the code at https://github.com/telagod/hearth-ext.
 
 EXPORT YOUR DATA ANYTIME
 - One-click export to ZIP, Obsidian Vault, or single-file JSON.
@@ -67,8 +68,8 @@ GETTING STARTED
 3. Open the side panel to see your library grow.
 4. Optionally, go to Settings → Provider, set up an LLM, and click "I agree".
 
-Hearth is open source: <repo URL>
-Live demo: <site URL>
+Hearth is open source: https://github.com/telagod/hearth-ext
+Live demo:             https://telagod.github.io/hearth-ext/
 ```
 
 ---
@@ -162,8 +163,8 @@ CWS 要求的图像资产（按 1280×800 推荐尺寸）：
 - [ ] `npm run test` 全部通过
 - [ ] 跑一次 SMOKE.md 完整 9 步
 - [ ] 5 张截图就位（含明暗模式各 1）
-- [ ] **演示站部署成功**（见 [DEPLOY.md](DEPLOY.md)）→ 拿到公网 URL
-- [ ] STORE.md 里 `<repo URL>` `<site URL>` 占位替换为真值
+- [x] **演示站部署成功** → https://telagod.github.io/hearth-ext/
+- [x] STORE.md 里 repo / site URL 已填实
 - [ ] CWS Developer Dashboard 填好 Homepage URL = 演示站 URL
 - [ ] privacy practices 表单填好
 - [ ] justification 文档复制进 dashboard

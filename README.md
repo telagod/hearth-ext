@@ -5,7 +5,10 @@
 > 把你在网上读过的每一段值得回看的话，
 > 变成一团有温度、会主动找你的知识余烬。
 
-[![status](https://img.shields.io/badge/status-design-orange)](docs/PRD.md)
+🌐 **[telagod.github.io/hearth-ext](https://telagod.github.io/hearth-ext/)** · 演示站  
+📦 **github.com/telagod/hearth-ext** · 仓库
+
+[![status](https://img.shields.io/badge/status-M6%20shipped-success)](docs/SMOKE.md)
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![chrome](https://img.shields.io/badge/chrome-116%2B-green)]()
 [![local-first](https://img.shields.io/badge/local--first-✓-success)]()
