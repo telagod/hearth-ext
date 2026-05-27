@@ -7,65 +7,97 @@
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="img/hearth.svg">
 <link rel="stylesheet" href="css/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script defer src="config.js"></script>
 <style>
-.lost {
-  min-height: 70vh;
-  display: grid; place-items: center;
-  text-align: center;
-  padding: 60px 24px;
-}
-.lost .code {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 14px;
-  letter-spacing: 0.2em;
-  color: var(--ember-400);
-  margin-bottom: 18px;
-}
-.lost h1 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 44px;
-  margin-bottom: 14px;
-  letter-spacing: -0.01em;
-}
-.lost p {
-  color: var(--text-secondary);
-  max-width: 460px;
-  margin: 0 auto 28px;
-  font-size: 15px;
-  line-height: 1.7;
-}
-.lost .actions { display: inline-flex; gap: 10px; }
+  .lost {
+    min-height: 70vh;
+    display: grid; place-items: center;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .lost-glyph {
+    width: 80px; height: 80px;
+    border-radius: 24px;
+    margin: 0 auto 28px;
+    background: radial-gradient(circle at 30% 30%,
+      rgba(255,200,140,0.95), rgba(248,123,21,0.85), rgba(192,66,12,0.95));
+    box-shadow: 0 0 60px rgba(248,123,21,0.45),
+                inset 0 0 22px rgba(255,255,255,0.18);
+    display: grid; place-items: center;
+    color: rgba(20,18,15,0.85);
+    opacity: 0.32;
+    filter: grayscale(0.4);
+  }
+  .lost-glyph svg { width: 44px; height: 44px; }
+  .lost-code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--ember-400);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .lost h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .lost p {
+    color: var(--text-secondary);
+    max-width: 460px;
+    margin: 0 auto 32px;
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+  .lost .cta-row { display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-brand" viewBox="0 0 24 24">
+      <path d="M3 11 Q3 9 5 9 L19 9 Q21 9 21 11 L20 16 Q19 20 16 20 L8 20 Q5 20 4 16 Z"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M12 3 C9 7 8 9 9 12 C9.6 14 11 14.6 12 14.6 C13 14.6 14.4 14 15 12 C16 9 15 7 12 3 Z"
+            fill="currentColor"/>
+    </symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24">
+      <path d="M12 3 C9 7 7.5 10 8 13 Q9 17 12 18 Q15 17 16 13 C16.5 10 15 7 12 3 Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
 <header class="nav">
   <a class="brand" href="index.html">
-    <span class="brand-mark">
-      <svg viewBox="0 0 24 24"><path d="M3 11 Q3 9 5 9 L19 9 Q21 9 21 11 L20 16 Q19 20 16 20 L8 20 Q5 20 4 16 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 3 C9 7 8 9 9 12 C9.6 14 11 14.6 12 14.6 C13 14.6 14.4 14 15 12 C16 9 15 7 12 3 Z" fill="currentColor"/></svg>
-    </span>
+    <span class="brand-mark"><svg viewBox="0 0 24 24"><use href="#i-brand"/></svg></span>
     <span class="brand-name">Hearth</span>
   </a>
   <nav class="nav-links">
     <a href="index.html">首页</a>
     <a href="docs.html">文档</a>
     <a href="mockup.html">设计稿</a>
-    <a data-href="repo" target="_blank" rel="noopener">GitHub</a>
+    <a class="nav-cta" data-href="repo" target="_blank" rel="noopener">GitHub</a>
   </nav>
 </header>
 
 <main>
   <section class="lost">
     <div>
-      <div class="code">404 · NOT FOUND</div>
+      <div class="lost-glyph"><svg viewBox="0 0 24 24"><use href="#i-flame"/></svg></div>
+      <div class="lost-code">404 · NOT FOUND</div>
       <h1>这里没有余烬。</h1>
       <p>
         你找的那段记忆不在这条路上。<br>
         回到首页，或翻翻文档？
       </p>
-      <div class="actions">
+      <div class="cta-row">
         <a class="btn-primary" href="index.html">回首页</a>
         <a class="btn-ghost" href="docs.html">看文档</a>
       </div>
@@ -74,8 +106,9 @@
 </main>
 
 <footer>
-  <div class="foot-row">
-    <span>Hearth · MIT © 2026</span>
+  <div class="foot-bottom" style="margin-top:0; border-top:0;">
+    <span>HEARTH · MIT © 2026</span>
+    <span class="quote">"找不到的也许是好事 — 你还有时间走另一条路。"</span>
   </div>
 </footer>
 </body>
