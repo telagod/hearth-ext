@@ -11,3 +11,6 @@ mockups/dist/
 playwright-report/
 test-results/
 coverage/
+
+docs/audit/
+
