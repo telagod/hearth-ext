@@ -1,0 +1,16 @@
+{
+  "extName": { "message": "Hearth — Knowledge Companion", "description": "Extension name" },
+  "extDesc": { "message": "Your reading, remembered. Quietly. Local-first knowledge keeper that lets old notes find you." },
+  "actionTitle": { "message": "Open Hearth" },
+  "saveSelection": { "message": "Save selection to Hearth" },
+  "openPanel": { "message": "Open Hearth panel" },
+  "ttSave": { "message": "Save" },
+  "ttAsk": { "message": "Ask" },
+  "ttLink": { "message": "Find related" },
+  "ttNote": { "message": "Annotate" },
+  "tabLibrary": { "message": "Library" },
+  "tabChat": { "message": "Chat" },
+  "tabInbox": { "message": "Inbox" },
+  "tabSkills": { "message": "Skills" },
+  "tabSettings": { "message": "Settings" }
+}

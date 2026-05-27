@@ -1,0 +1,58 @@
+name: Deploy Hearth site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+# Single concurrent deploy at a time — newer pushes cancel in-flight runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Inject repo URL into config.js
+        run: |
+          REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
+          REF="${GITHUB_REF_NAME:-main}"
+          echo "Rewriting config.js → REPO_URL=${REPO_URL} BRANCH=${REF}"
+          sed -i \
+            -e "s|https://github.com/telagod/hearth-ext|${REPO_URL}|" \
+            -e "s|const BRANCH = 'main';|const BRANCH = '${REF}';|" \
+            site/config.js
+
+      - name: Add CNAME (only if file exists in repo root)
+        run: |
+          if [ -f site/CNAME ]; then
+            echo "Custom domain configured: $(cat site/CNAME)"
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

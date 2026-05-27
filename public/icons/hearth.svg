@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hearth brand mark — vector-only.
+  Concept: a hearth (low ceramic bowl) cradling a single warm flame.
+  Geometry is intentionally simple so it survives down to 16px.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Hearth">
+  <defs>
+    <!-- Bowl: deep ink to graphite -->
+    <radialGradient id="bowl" cx="50%" cy="62%" r="62%">
+      <stop offset="0%" stop-color="#3b3a32"/>
+      <stop offset="60%" stop-color="#262620"/>
+      <stop offset="100%" stop-color="#181813"/>
+    </radialGradient>
+
+    <!-- Flame core: ember radial -->
+    <radialGradient id="flame" cx="50%" cy="68%" r="60%">
+      <stop offset="0%"  stop-color="#fff3c8"/>
+      <stop offset="35%" stop-color="#ffd89a"/>
+      <stop offset="70%" stop-color="#ff9b2d"/>
+      <stop offset="100%" stop-color="#c0420c" stop-opacity="0.85"/>
+    </radialGradient>
+
+    <!-- Outer glow halo -->
+    <radialGradient id="halo" cx="50%" cy="62%" r="58%">
+      <stop offset="0%"  stop-color="#ff9b2d" stop-opacity="0.32"/>
+      <stop offset="55%" stop-color="#ff9b2d" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#ff9b2d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Soft halo (cropped by bowl) -->
+  <circle cx="64" cy="68" r="56" fill="url(#halo)"/>
+
+  <!-- Bowl: a low chalice -->
+  <path d="
+    M 16 64
+    Q 16 56 24 56
+    L 104 56
+    Q 112 56 112 64
+    L 108 88
+    Q 106 108 88 110
+    L 40 110
+    Q 22 108 20 88
+    Z"
+    fill="url(#bowl)"
+    stroke="rgba(255,243,220,0.10)"
+    stroke-width="1.2"/>
+
+  <!-- Bowl rim highlight (very subtle) -->
+  <path d="M 24 58 L 104 58"
+    stroke="rgba(255,200,140,0.22)" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Inner shadow line where flame meets bowl -->
+  <path d="M 30 64 Q 64 70 98 64"
+    stroke="rgba(0,0,0,0.45)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+
+  <!-- Flame -->
+  <g>
+    <!-- Outer flame envelope -->
+    <path d="
+      M 64 22
+      C 52 38, 46 50, 48 62
+      C 50 74, 60 80, 64 80
+      C 68 80, 78 74, 80 62
+      C 82 50, 76 38, 64 22 Z"
+      fill="url(#flame)"
+      stroke="rgba(192,66,12,0.35)" stroke-width="0.8"/>
+
+    <!-- Inner brighter core -->
+    <path d="
+      M 64 36
+      C 58 48, 55 56, 57 64
+      C 59 72, 64 74, 64 74
+      C 64 74, 69 72, 71 64
+      C 73 56, 70 48, 64 36 Z"
+      fill="#fff3c8" fill-opacity="0.85"/>
+
+    <!-- Tiny brightest hotspot -->
+    <ellipse cx="64" cy="60" rx="3.2" ry="6" fill="#ffffff" fill-opacity="0.9"/>
+  </g>
+</svg>

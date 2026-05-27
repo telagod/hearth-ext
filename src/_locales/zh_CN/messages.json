@@ -1,0 +1,16 @@
+{
+  "extName": { "message": "Hearth · 知识围炉", "description": "扩展名称" },
+  "extDesc": { "message": "本地优先的知识管家，让你读过的旧笔记主动找你。" },
+  "actionTitle": { "message": "打开 Hearth" },
+  "saveSelection": { "message": "保存到 Hearth" },
+  "openPanel": { "message": "打开 Hearth 面板" },
+  "ttSave": { "message": "存" },
+  "ttAsk": { "message": "问" },
+  "ttLink": { "message": "关联" },
+  "ttNote": { "message": "想" },
+  "tabLibrary": { "message": "库" },
+  "tabChat": { "message": "对话" },
+  "tabInbox": { "message": "收件箱" },
+  "tabSkills": { "message": "Skills" },
+  "tabSettings": { "message": "设置" }
+}

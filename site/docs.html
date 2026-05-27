@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth · Docs</title>
+<meta name="description" content="Hearth 文档索引 — PRD / Architecture / Database / Skill Spec / Benchmark / Smoke">
+<link rel="icon" type="image/svg+xml" href="img/hearth.svg">
+<link rel="canonical" href="./docs.html">
+<link rel="stylesheet" href="css/site.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="config.js"></script>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="index.html">
+    <span class="brand-mark">
+      <svg viewBox="0 0 24 24"><path d="M3 11 Q3 9 5 9 L19 9 Q21 9 21 11 L20 16 Q19 20 16 20 L8 20 Q5 20 4 16 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 3 C9 7 8 9 9 12 C9.6 14 11 14.6 12 14.6 C13 14.6 14.4 14 15 12 C16 9 15 7 12 3 Z" fill="currentColor"/></svg>
+    </span>
+    <span class="brand-name">Hearth</span>
+  </a>
+  <nav class="nav-links">
+    <a href="index.html#features">特性</a>
+    <a href="index.html#install">安装</a>
+    <a href="mockup.html">设计稿</a>
+    <a href="docs.html" style="color:var(--ember-400)">文档</a>
+  </nav>
+</header>
+
+<main>
+  <section class="install">
+    <div class="section-head">
+      <span class="num">DOCS</span>
+      <h2>文档索引</h2>
+    </div>
+    <div class="install-steps">
+      <div class="step">
+        <div class="step-n">P</div>
+        <div>
+          <h4>PRD · 产品立意</h4>
+          <p>对标矩阵、四层切入、温度引擎、隐私模型。<br>
+            <code><a data-href="repo:docs/PRD.md" target="_blank" rel="noopener">docs/PRD.md</a></code></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">A</div>
+        <div>
+          <h4>Architecture · 模块/数据流/隐私边界</h4>
+          <p>SW + Offscreen + Content Script 三件套，消息协议，性能预算。<br>
+            <code><a data-href="repo:docs/ARCHITECTURE.md" target="_blank" rel="noopener">docs/ARCHITECTURE.md</a></code></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">D</div>
+        <div>
+          <h4>Database · Schema + FTS5 + LSH</h4>
+          <p>12 表，4 视图，SimHash 64-bit banding，迁移策略。<br>
+            <code><a data-href="repo:docs/DATABASE.md" target="_blank" rel="noopener">docs/DATABASE.md</a></code></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">S</div>
+        <div>
+          <h4>Skill Spec v1.0</h4>
+          <p>skill.md 规范、21 个白名单工具、沙箱约束、模板语法。<br>
+            <code><a data-href="repo:docs/SKILL_SPEC.md" target="_blank" rel="noopener">docs/SKILL_SPEC.md</a></code></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">B</div>
+        <div>
+          <h4>Benchmark · 10k notes 实测</h4>
+          <p>LSH 比全扫 <strong>144× speedup</strong>，FTS5 在 10k 规模 &lt; 6ms p95。<br>
+            <code><a data-href="repo:docs/BENCHMARK.md" target="_blank" rel="noopener">docs/BENCHMARK.md</a></code></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">K</div>
+        <div>
+          <h4>Smoke Test · 体验清单</h4>
+          <p>逐里程碑加载步骤，9 步走通核心场景。<br>
+            <code><a data-href="repo:docs/SMOKE.md" target="_blank" rel="noopener">docs/SMOKE.md</a></code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-row">
+    <span>Hearth · MIT © 2026</span>
+    <span class="dot">·</span>
+    <a href="index.html">首页</a>
+  </div>
+</footer>
+</body>
+</html>

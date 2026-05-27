@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>Hearth · 你读过的，都被静静记着</title>
+<meta name="description" content="Hearth 是一款本地优先的浏览器扩展，让你读过的旧笔记主动找你。SQLite WASM + FTS5 + LSH，全本地，BYOK。">
+<meta property="og:title" content="Hearth — Personal Knowledge Companion">
+<meta property="og:description" content="Your reading, remembered. Quietly.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hearth — Personal Knowledge Companion">
+<meta name="twitter:description" content="Your reading, remembered. Quietly.">
+<meta name="twitter:image" content="img/og.png">
+<link rel="icon" type="image/svg+xml" href="img/hearth.svg">
+<link rel="canonical" href="./">
+<link rel="stylesheet" href="css/site.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="config.js"></script>
+</head>
+<body>
+
+<!-- SVG defs reused from mockup palette -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-brand" viewBox="0 0 24 24">
+      <path d="M3 11 Q3 9 5 9 L19 9 Q21 9 21 11 L20 16 Q19 20 16 20 L8 20 Q5 20 4 16 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M12 3 C9 7 8 9 9 12 C9.6 14 11 14.6 12 14.6 C13 14.6 14.4 14 15 12 C16 9 15 7 12 3 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24">
+      <path d="M12 3 C9 7 7.5 10 8 13 Q9 17 12 18 Q15 17 16 13 C16.5 10 15 7 12 3 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <path d="M12 3 L20 6 L20 12 Q20 18 12 21 Q4 18 4 12 L4 6 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M9 12 L11.4 14.4 L15 10.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <path d="M12 3 L13.5 8.2 L18.5 9.5 L13.5 10.8 L12 16 L10.5 10.8 L5.5 9.5 L10.5 8.2 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24">
+      <path d="M5 19 Q5 9 14 5 Q19 4 19 9 Q19 18 9 19 Q5 19 5 19 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M14 8 Q10 12 7 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-thread" viewBox="0 0 24 24">
+      <path d="M8 7 Q4 7 4 11 Q4 15 8 15 L11 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M16 9 L13 9 Q9 9 9 13 Q9 17 13 17 L16 17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/>
+      <path d="M16 17 Q20 17 20 13 Q20 9 16 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <a class="brand" href="#top">
+    <span class="brand-mark"><svg viewBox="0 0 24 24"><use href="#i-brand"/></svg></span>
+    <span class="brand-name">Hearth</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#features">特性</a>
+    <a href="#privacy">隐私</a>
+    <a href="#install">安装</a>
+    <a href="#roadmap">路线</a>
+    <a href="#" target="_blank" rel="noopener" data-href="repo">GitHub</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>
+        你读过的，<br>
+        都被静静<em>记着</em>。
+      </h1>
+      <p class="lead">
+        Hearth 是一款 <strong>本地优先</strong> 的浏览器扩展。<br>
+        它不让你打开 app —— 是<strong>旧笔记主动找你</strong>。
+      </p>
+      <div class="cta-row">
+        <a class="btn-primary" href="#install">立即安装</a>
+        <a class="btn-ghost" href="mockup.html">看设计稿 →</a>
+      </div>
+      <div class="hero-tags">
+        <span class="tag"><svg viewBox="0 0 24 24" width="11" height="11"><use href="#i-shield"/></svg> 本地 SQLite + OPFS</span>
+        <span class="tag"><svg viewBox="0 0 24 24" width="11" height="11"><use href="#i-spark"/></svg> BYO API Key</span>
+        <span class="tag"><svg viewBox="0 0 24 24" width="11" height="11"><use href="#i-leaf"/></svg> MIT 开源</span>
+      </div>
+    </div>
+    <div class="hero-orb-stage">
+      <div class="hero-orb">
+        <svg viewBox="0 0 24 24"><use href="#i-flame"/></svg>
+      </div>
+      <div class="hero-orb-tooltip">
+        <div class="tt-lead"><svg viewBox="0 0 24 24" width="12" height="12"><use href="#i-flame"/></svg> Hearth 想起来了</div>
+        <p>你 3 周前读 SQLite WAL 时也想过这个，<br>当时你写下 <em>"fsync 才是真瓶颈"</em>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-head">
+    <span class="num">01</span>
+    <h2>四层切入 · 你不必再打开 app</h2>
+  </div>
+  <div class="grid grid-4">
+    <div class="card">
+      <div class="card-num">L0</div>
+      <h3>寄生候选</h3>
+      <p>复制 / 深度阅读 / 截图 — 后台默默落到 Inbox，72 小时未确认自动消散。</p>
+    </div>
+    <div class="card">
+      <div class="card-num">L1</div>
+      <h3>选中浮 bar</h3>
+      <p>一秒按一下：📎 存 · 🤖 问 · 🔗 关联 · 💭 想。再也不必跳到主界面。</p>
+    </div>
+    <div class="card emph">
+      <div class="card-num ember">L2</div>
+      <h3>反向召回 ☕</h3>
+      <p>打开新页面时，旧笔记主动浮起。"Hearth 想起来了 — 你 3 周前读 X 时写过 Y。"</p>
+    </div>
+    <div class="card">
+      <div class="card-num">L3</div>
+      <h3>周回顾</h3>
+      <p>每周一 9 点，把上周高亮聚成 3-5 张主题卡。5 分钟刷一遍。</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy" id="privacy">
+  <div class="section-head">
+    <span class="num">02</span>
+    <h2>隐私 = 默认值</h2>
+  </div>
+  <div class="privacy-row">
+    <div class="privacy-card">
+      <div class="ico"><svg viewBox="0 0 24 24" width="22" height="22"><use href="#i-shield"/></svg></div>
+      <div>
+        <h3>本地优先</h3>
+        <p>所有笔记存在你这台设备的 OPFS（SQLite WAL）。永远不离开浏览器，除非你按下"问 AI"。</p>
+      </div>
+    </div>
+    <div class="privacy-card">
+      <div class="ico"><svg viewBox="0 0 24 24" width="22" height="22"><use href="#i-leaf"/></svg></div>
+      <div>
+        <h3>BYO API Key</h3>
+        <p>Anthropic / OpenAI / Ollama 三选一，凭据存你本地。Hearth 永不持有，永不上报。</p>
+      </div>
+    </div>
+    <div class="privacy-card">
+      <div class="ico"><svg viewBox="0 0 24 24" width="22" height="22"><use href="#i-thread"/></svg></div>
+      <div>
+        <h3>每次出网都审计</h3>
+        <p>Settings → 过去 7 天云端调用，逐行可看：发了什么、几字节、几毫秒。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install" id="install">
+  <div class="section-head">
+    <span class="num">03</span>
+    <h2>安装</h2>
+  </div>
+  <div class="install-steps">
+    <div class="step"><div class="step-n">1</div><div><h4>克隆仓库</h4><pre><code>git clone &lt;repo&gt; hearth
+cd hearth
+npm install --legacy-peer-deps</code></pre></div></div>
+    <div class="step"><div class="step-n">2</div><div><h4>构建</h4><pre><code>npm run build</code></pre></div></div>
+    <div class="step"><div class="step-n">3</div><div><h4>加载</h4><p>访问 <code>chrome://extensions</code> → 开发者模式 → 加载已解压 → 选 <code>dist/</code></p></div></div>
+    <div class="step"><div class="step-n">4</div><div><h4>配 LLM (可选)</h4><p>点工具栏 ☕ 图标 → Settings → Provider → 填 API key → 点「我同意」</p></div></div>
+  </div>
+  <div class="alt">
+    Chrome Web Store 上架包准备中 · <a data-href="repo" target="_blank" rel="noopener">关注 GitHub 获取更新</a>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap" id="roadmap">
+  <div class="section-head">
+    <span class="num">04</span>
+    <h2>路线</h2>
+  </div>
+  <div class="timeline">
+    <div class="milestone done"><span class="m-tag">M1</span> 基石：浮 bar + Library + FTS5 + SQLite WASM</div>
+    <div class="milestone done"><span class="m-tag">M2</span> 温度引擎：LLM Adapter ×3 + Recall Orb + Chat + 隐私审计</div>
+    <div class="milestone done"><span class="m-tag">M3</span> 编排：Skill Engine + 5 内置 + Inbox CRUD + 数据导出 + 流式</div>
+    <div class="milestone done"><span class="m-tag">M4</span> 输入源：docx + pdf + 图片 OCR + L0 探针 + 拖入 UI</div>
+    <div class="milestone done"><span class="m-tag">M4.5</span> 打磨：Skill 编辑器 + SPA 路由 + SimHash LSH</div>
+    <div class="milestone now"><span class="m-tag">M5</span> 门面：Tesseract 本地化 + i18n + 演示站 + Web Store ← 你在这</div>
+    <div class="milestone next"><span class="m-tag">M6</span> 社区 skill / 大库压测 / 视频/音频</div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-row">
+    <span>Hearth · MIT © 2026</span>
+    <span class="dot">·</span>
+    <a href="#" target="_blank" rel="noopener" data-href="repo">GitHub</a>
+    <span class="dot">·</span>
+    <a href="mockup.html">设计稿</a>
+    <span class="dot">·</span>
+    <a href="docs.html">文档</a>
+  </div>
+  <p class="foot-quote">
+    "你读过的每一段，都该有一团余烬替你守着。"
+  </p>
+</footer>
+
+</body>
+</html>

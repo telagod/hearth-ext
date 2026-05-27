@@ -1,0 +1,13 @@
+node_modules/
+dist/
+mockups/dist/
+*.log
+.env
+.env.local
+.DS_Store
+.vscode/
+.idea/
+*.zip
+playwright-report/
+test-results/
+coverage/

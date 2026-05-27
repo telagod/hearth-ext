@@ -1,0 +1,104 @@
+{
+  "manifest_version": 3,
+  "name": "Hearth — Knowledge Companion",
+  "short_name": "Hearth",
+  "version": "0.0.1",
+  "description": "Your reading, remembered. Quietly. Local-first knowledge keeper that lets old notes find you.",
+  "default_locale": "en",
+  "minimum_chrome_version": "116",
+
+  "icons": {
+    "16": "icons/hearth-16.png",
+    "32": "icons/hearth-32.png",
+    "48": "icons/hearth-48.png",
+    "128": "icons/hearth-128.png"
+  },
+
+  "action": {
+    "default_title": "Open Hearth",
+    "default_icon": "icons/hearth-32.png"
+  },
+
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "*://*.bank.com/*",
+        "*://mail.google.com/*",
+        "*://*.alipay.com/*",
+        "*://accounts.google.com/*"
+      ],
+      "js": ["content/index.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*",
+        "tesseract/*",
+        "skills/*",
+        "fonts/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "alarms",
+    "offscreen",
+    "contextMenus",
+    "notifications",
+    "sidePanel",
+    "unlimitedStorage"
+  ],
+
+  "optional_permissions": [
+    "clipboardRead"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "optional_host_permissions": [
+    "https://api.anthropic.com/*",
+    "https://api.openai.com/*",
+    "http://localhost:11434/*"
+  ],
+
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "mac": "Command+Shift+H"
+      },
+      "description": "Toggle Hearth side panel"
+    },
+    "capture-selection": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Save current selection to Hearth"
+    }
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self' https://api.anthropic.com https://api.openai.com http://localhost:11434 https://tessdata.projectnaptha.com"
+  }
+}

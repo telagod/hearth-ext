@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>Hearth · Design Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==========  Tokens (mirrors src/sidepanel/styles/tokens.css)  ========== */
+:root {
+  color-scheme: dark;
+  --ink-50:#f7f7f5; --ink-100:#ecebe6; --ink-200:#d6d4ca; --ink-300:#b6b3a3;
+  --ink-400:#8e8a7a; --ink-500:#6b685a; --ink-600:#504e44; --ink-700:#3b3a32;
+  --ink-800:#262620; --ink-900:#181813; --ink-950:#0c0c09;
+  --ember-50:#fff8ed; --ember-200:#ffd89a; --ember-400:#ff9b2d;
+  --ember-500:#f87b15; --ember-600:#e85d0a; --ember-700:#c0420c;
+  --moss-400:#85a987; --moss-500:#5f8a64; --moss-600:#456c4a;
+
+  --hl-amber:#5d4a1f; --hl-rose:#5d2a30; --hl-sky:#25445a;
+  --hl-sage:#2f4533; --hl-violet:#3a2f54; --hl-slate:#3a3d44;
+
+  --lg-blur-md: 22px; --lg-blur-lg: 38px; --lg-saturate: 1.6;
+  --lg-radius-sm:8px; --lg-radius-md:12px; --lg-radius-lg:18px; --lg-radius-xl:28px;
+  --lg-radius-pill:9999px;
+  --lg-shadow-elevated: 0 6px 28px rgba(0,0,0,0.45);
+  --lg-shadow-high:     0 14px 52px rgba(0,0,0,0.6);
+  --lg-shadow-ember:    0 0 36px rgba(255,155,45,0.22);
+  --lg-easing-spring: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --surface-0:#131210;
+  --surface-1: rgba(28,26,22,0.72);
+  --surface-2: rgba(38,36,30,0.82);
+  --surface-3: rgba(48,46,38,0.88);
+  --surface-toolbar: rgba(20,18,15,0.72);
+  --surface-overlay: rgba(28,26,22,0.96);
+  --border-subtle: rgba(255,243,220,0.08);
+  --border-strong: rgba(255,243,220,0.18);
+  --text-primary:#ebe9e0; --text-secondary:#b8b4a4; --text-tertiary:#898577;
+  --text-muted:#5e5b50; --text-inverse:#1d1c17; --text-accent: var(--ember-400);
+  --focus-ring: var(--ember-500);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+body {
+  font-family: 'Inter', 'Noto Serif SC', system-ui, sans-serif;
+  font-size: 14px; line-height: 1.55;
+  color: var(--text-primary);
+  background:
+    radial-gradient(1400px 900px at 88% -8%, rgba(248,123,21,0.13), transparent 60%),
+    radial-gradient(1000px 700px at -10% 110%, rgba(95,138,100,0.08), transparent 60%),
+    radial-gradient(800px 500px at 50% 50%, rgba(60,40,18,0.20), transparent 70%),
+    var(--surface-0);
+  background-attachment: fixed;
+  padding: 56px 32px 80px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background ambient particles (subtle) */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.8 0 0 0 0 0.5 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+main { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
+
+/* ==========  Header  ========== */
+.brand-hero { text-align: center; margin-bottom: 48px; }
+.brand-mark {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 36px; font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.brand-mark .glyph {
+  width: 56px; height: 56px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,200,140,0.95), rgba(248,123,21,0.85) 55%, rgba(192,66,12,0.9));
+  box-shadow: 0 0 32px rgba(248,123,21,0.5),
+              inset 0 0 16px rgba(255,255,255,0.2);
+  display: grid; place-items: center;
+  color: rgba(20,18,15,0.85);
+}
+.brand-mark .glyph svg { width: 30px; height: 30px; }
+.brand-tag {
+  margin-top: 14px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+.brand-tag em {
+  font-style: normal;
+  color: var(--ember-400);
+}
+
+/* ==========  Layout  ========== */
+.grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.section-title {
+  display: flex; align-items: baseline; gap: 8px;
+  margin: 32px 0 14px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.section-title .num {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ember-400);
+}
+
+/* ==========  Sidepanel mockup  ========== */
+.sidepanel {
+  width: 380px;
+  height: 720px;
+  border-radius: var(--lg-radius-xl);
+  background: var(--surface-1);
+  backdrop-filter: blur(var(--lg-blur-lg)) saturate(var(--lg-saturate));
+  -webkit-backdrop-filter: blur(var(--lg-blur-lg)) saturate(var(--lg-saturate));
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--lg-shadow-high);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+.sp-titlebar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-toolbar);
+}
+.sp-titlebar .logo {
+  width: 26px; height: 26px; border-radius: 8px;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,200,140,0.95), rgba(248,123,21,0.9), rgba(192,66,12,0.95));
+  box-shadow: 0 0 12px rgba(248,123,21,0.45),
+              inset 0 0 4px rgba(255,255,255,0.18);
+  display: grid; place-items: center;
+  color: rgba(20,18,15,0.85);
+}
+.sp-titlebar .logo svg { width: 16px; height: 16px; }
+.sp-titlebar .name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+.sp-titlebar .count {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.sp-tabs {
+  display: flex;
+  padding: 10px 12px 6px;
+  gap: 4px;
+}
+.sp-tab {
+  flex: 1;
+  padding: 8px 4px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  border-radius: var(--lg-radius-sm);
+  cursor: pointer;
+  transition: all 180ms var(--lg-easing-spring);
+}
+.sp-tab svg { color: var(--text-tertiary); transition: color 160ms; }
+.sp-tab[aria-selected="true"] {
+  background: var(--surface-3);
+  color: var(--text-primary);
+  box-shadow: 0 1px 0 var(--border-strong) inset;
+}
+.sp-tab[aria-selected="true"] svg { color: var(--ember-400); }
+
+.sp-search {
+  margin: 10px 16px 14px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px;
+  border-radius: var(--lg-radius-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+.sp-search .kbd {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--surface-3);
+  color: var(--text-tertiary);
+  border: 1px solid var(--border-subtle);
+}
+
+.sp-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 16px;
+}
+
+/* Recall hero card */
+.recall-card {
+  margin: 4px 0 18px;
+  padding: 16px 16px 14px;
+  border-radius: var(--lg-radius-lg);
+  background: linear-gradient(180deg, rgba(255,155,45,0.10), rgba(255,155,45,0.04));
+  border: 1px solid rgba(255,155,45,0.18);
+  position: relative; overflow: hidden;
+}
+.recall-card::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,155,45,0.18), transparent 70%);
+}
+.recall-card .lead {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--ember-400);
+  text-transform: uppercase;
+  position: relative;
+}
+.recall-card .lead .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ember-400);
+  box-shadow: 0 0 8px var(--ember-500);
+}
+.recall-card .narrative {
+  font-family: 'Noto Serif SC', 'Inter', serif;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  position: relative;
+}
+.recall-card .narrative em {
+  color: var(--ember-200);
+  font-style: italic;
+}
+.recall-card .candidates {
+  margin-top: 12px;
+  display: grid; gap: 6px;
+  position: relative;
+}
+.candidate {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 8px 10px;
+  border-radius: var(--lg-radius-sm);
+  background: rgba(0,0,0,0.18);
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 160ms;
+}
+.candidate:hover { background: rgba(0,0,0,0.3); border-color: var(--border-subtle); }
+.candidate .ico { color: var(--ember-400); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+.candidate .title { color: var(--text-primary); font-weight: 500; }
+.candidate .meta {
+  margin-left: auto; font-size: 10.5px; color: var(--text-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Note cards */
+.note {
+  margin-bottom: 10px;
+  padding: 13px 14px 11px;
+  border-radius: var(--lg-radius-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  transition: all 180ms var(--lg-easing-spring);
+}
+.note:hover { background: var(--surface-3); transform: translateX(2px); }
+.note .head {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.note .head .fav {
+  width: 14px; height: 14px; border-radius: 3px;
+  background: var(--ember-600);
+  flex-shrink: 0;
+}
+.note .head .site { color: var(--text-secondary); font-weight: 500; }
+.note .head .time {
+  margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+}
+.note .body {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+.note .body .hl {
+  padding: 1px 4px; border-radius: 3px;
+  background: var(--hl-amber);
+  color: var(--ember-50);
+}
+.note .body .hl-sky    { background: var(--hl-sky); }
+.note .body .hl-sage   { background: var(--hl-sage); }
+.note .annot {
+  margin-top: 8px;
+  padding-left: 10px;
+  border-left: 2px solid var(--ember-500);
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-style: italic;
+  font-family: 'Noto Serif SC', serif;
+}
+.note .foot {
+  margin-top: 8px;
+  display: flex; gap: 5px; align-items: center;
+}
+.tag {
+  font-size: 10.5px; padding: 1px 8px;
+  border-radius: var(--lg-radius-pill);
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+.tag.ember { color: var(--ember-200); background: rgba(255,155,45,0.12); border-color: rgba(255,155,45,0.25); }
+.tag.moss  { color: var(--moss-400); background: rgba(95,138,100,0.12); border-color: rgba(95,138,100,0.3); }
+
+/* Stat ribbon */
+.stat-ribbon {
+  display: flex; gap: 6px;
+  margin: 16px 0 8px;
+}
+.stat {
+  flex: 1;
+  padding: 10px 10px;
+  border-radius: var(--lg-radius-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+.stat .num {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ember-400);
+}
+.stat .label {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ==========  Right column — multi panel  ========== */
+.right { display: grid; gap: 28px; }
+
+/* Chat */
+.chat-window {
+  border-radius: var(--lg-radius-xl);
+  background: var(--surface-1);
+  backdrop-filter: blur(var(--lg-blur-lg)) saturate(var(--lg-saturate));
+  -webkit-backdrop-filter: blur(var(--lg-blur-lg)) saturate(var(--lg-saturate));
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--lg-shadow-elevated);
+  overflow: hidden;
+}
+.chat-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.chat-head .title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 15px;
+}
+.chat-head .ctx {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: var(--lg-radius-pill);
+  background: rgba(95,138,100,0.14);
+  color: var(--moss-400);
+  border: 1px solid rgba(95,138,100,0.3);
+}
+.chat-head .model {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.chat-body {
+  padding: 18px 22px 8px;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  min-height: 340px;
+}
+.msg {
+  display: flex; gap: 10px;
+}
+.msg .avatar {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: grid; place-items: center;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.msg.user .avatar {
+  background: var(--surface-3);
+  color: var(--text-secondary);
+}
+.msg.assistant .avatar {
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,200,140,0.95), rgba(248,123,21,0.85));
+  color: rgba(20,18,15,0.85);
+  box-shadow: 0 0 14px rgba(248,123,21,0.4);
+  display: grid; place-items: center;
+}
+.msg.assistant .avatar svg { width: 16px; height: 16px; }
+.msg .bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: var(--lg-radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.msg.user .bubble {
+  background: var(--surface-3);
+}
+.msg.assistant .bubble {
+  background: linear-gradient(180deg, rgba(255,155,45,0.06), rgba(255,155,45,0.02));
+  border-color: rgba(255,155,45,0.18);
+}
+.msg .bubble .cite {
+  margin-top: 8px;
+  font-size: 11.5px;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.18);
+  border-radius: var(--lg-radius-sm);
+  color: var(--text-tertiary);
+  font-family: 'Noto Serif SC', serif;
+}
+.msg .bubble .cite a {
+  color: var(--ember-200);
+  text-decoration: none;
+}
+
+.chat-input {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  margin: 8px 16px 16px;
+  border-radius: var(--lg-radius-lg);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+}
+.chat-input input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  color: var(--text-primary);
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+}
+.chat-input input::placeholder { color: var(--text-tertiary); }
+.chat-input .send {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  border: 0;
+  background: linear-gradient(180deg, var(--ember-400), var(--ember-600));
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(248,123,21,0.35);
+}
+
+/* Inbox + Skill panels */
+.panel-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+@media (max-width: 900px) { .panel-row { grid-template-columns: 1fr; } }
+
+.panel {
+  border-radius: var(--lg-radius-xl);
+  background: var(--surface-1);
+  backdrop-filter: blur(var(--lg-blur-lg)) saturate(var(--lg-saturate));
+  -webkit-backdrop-filter: blur(var(--lg-blur-lg)) saturate(var(--lg-saturate));
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--lg-shadow-elevated);
+  padding: 18px 20px 16px;
+}
+.panel-head {
+  display: flex; align-items: baseline; gap: 8px;
+  margin-bottom: 14px;
+}
+.panel-head .title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+.panel-head .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.panel-head .action {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--ember-400);
+  cursor: pointer;
+}
+
+/* Inbox items */
+.inbox-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px; align-items: center;
+  padding: 9px 10px;
+  border-radius: var(--lg-radius-sm);
+  margin-bottom: 6px;
+  background: rgba(0,0,0,0.15);
+  border: 1px solid transparent;
+  transition: all 140ms;
+}
+.inbox-item:hover { border-color: var(--border-subtle); background: rgba(0,0,0,0.22); }
+.inbox-item .kind {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--surface-3);
+  display: grid; place-items: center;
+  color: var(--ember-400);
+}
+.inbox-item .kind svg { width: 16px; height: 16px; }
+.inbox-item .text {
+  font-size: 12.5px;
+  color: var(--text-primary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.inbox-item .text .meta {
+  display: block;
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+.inbox-item .actions {
+  display: flex; gap: 4px;
+}
+.iconbtn {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  border: 0;
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: all 120ms;
+}
+.iconbtn svg { display: block; }
+.iconbtn:hover { background: var(--ember-600); color: #fff; }
+.iconbtn.danger:hover { background: #8b2a2a; }
+
+/* Skill cards */
+.skill-card {
+  padding: 11px 12px;
+  border-radius: var(--lg-radius-md);
+  background: rgba(0,0,0,0.15);
+  margin-bottom: 8px;
+  border: 1px solid var(--border-subtle);
+}
+.skill-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+.skill-head .name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  color: var(--ember-200);
+}
+.skill-head .ver {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.skill-head .toggle {
+  margin-left: auto;
+  width: 28px; height: 16px;
+  border-radius: 8px;
+  background: var(--moss-500);
+  position: relative;
+  cursor: pointer;
+}
+.skill-head .toggle::after {
+  content: '';
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute; top: 2px; right: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.skill-head .toggle.off { background: var(--ink-700); }
+.skill-head .toggle.off::after { right: auto; left: 2px; }
+.skill-card .desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+.skill-card .meta {
+  display: flex; gap: 6px; align-items: center;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+.skill-card .meta .trig {
+  font-family: 'JetBrains Mono', monospace;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--surface-3);
+}
+.skill-card .meta .next {
+  margin-left: auto;
+  color: var(--moss-400);
+}
+
+/* ==========  Browser frame mockups (floatbar + orb)  ========== */
+.browser-mock {
+  border-radius: var(--lg-radius-xl);
+  background: linear-gradient(180deg, #1a1816 0%, #0e0d0b 100%);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  box-shadow: var(--lg-shadow-high);
+}
+.browser-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.browser-bar .dots {
+  display: flex; gap: 6px;
+}
+.browser-bar .dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #4a4945;
+}
+.browser-bar .dots span:nth-child(1) { background: #e57373; }
+.browser-bar .dots span:nth-child(2) { background: #fbbf24; }
+.browser-bar .dots span:nth-child(3) { background: #6ee7b7; }
+.browser-bar .url {
+  flex: 1;
+  background: var(--surface-2);
+  padding: 5px 12px;
+  border-radius: var(--lg-radius-pill);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+}
+.browser-bar .ext-icon {
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,200,140,0.95), rgba(248,123,21,0.85), rgba(192,66,12,0.95));
+  box-shadow: 0 0 10px rgba(248,123,21,0.5),
+              inset 0 0 4px rgba(255,255,255,0.18);
+  display: grid; place-items: center;
+  color: rgba(20,18,15,0.85);
+}
+.browser-bar .ext-icon svg { width: 14px; height: 14px; }
+.browser-canvas {
+  padding: 36px 56px;
+  min-height: 420px;
+  background:
+    radial-gradient(900px 600px at 20% -10%, rgba(255,155,45,0.06), transparent 60%),
+    var(--surface-0);
+  position: relative;
+}
+.fake-article {
+  max-width: 580px; margin: 0 auto;
+}
+.fake-article h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.fake-article p {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+.fake-article p .selection {
+  background: rgba(255,200,140,0.22);
+  color: var(--text-primary);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+/* Floating Bar in browser canvas */
+.floatbar {
+  position: absolute;
+  top: 140px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 4px;
+  padding: 7px;
+  border-radius: 16px;
+  background: rgba(20, 18, 15, 0.85);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 38px rgba(0,0,0,0.55);
+}
+.floatbar button {
+  appearance: none; border: 0;
+  width: 38px; height: 38px;
+  border-radius: 11px;
+  background: transparent;
+  color: rgba(247,247,245,0.95);
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: background 140ms, transform 140ms;
+}
+.floatbar button svg { width: 18px; height: 18px; display: block; }
+.floatbar button:hover { background: rgba(255,255,255,0.10); }
+.floatbar button.primary {
+  background: linear-gradient(180deg, var(--ember-400), var(--ember-600));
+  box-shadow: 0 0 16px rgba(248,123,21,0.4);
+  color: #fff;
+}
+.floatbar button.primary:hover { filter: brightness(1.06); }
+.floatbar::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%; transform: translateX(-50%) rotate(45deg);
+  width: 12px; height: 12px;
+  background: rgba(20,18,15,0.85);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Orb */
+.orb-zone {
+  position: absolute;
+  bottom: 24px; right: 24px;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+.orb {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(255,220,170,0.98), rgba(248,123,21,0.92) 55%, rgba(192,66,12,0.95));
+  box-shadow:
+    0 0 32px rgba(248,123,21,0.6),
+    inset 0 0 22px rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.25);
+  position: relative;
+  cursor: pointer;
+  display: grid; place-items: center;
+  color: rgba(50,20,0,0.85);
+  animation: orb-breath 3.5s ease-in-out infinite;
+}
+.orb svg { width: 28px; height: 28px; display: block; }
+.orb::after {
+  content: '';
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(248,123,21,0.18), transparent 70%);
+  z-index: -1;
+}
+@keyframes orb-breath {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+.orb-tooltip {
+  padding: 12px 16px 10px;
+  border-radius: var(--lg-radius-lg);
+  background: rgba(20,18,15,0.92);
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--lg-shadow-high);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  max-width: 280px;
+  position: relative;
+}
+.orb-tooltip .lead {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--ember-400);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.orb-tooltip em { color: var(--ember-200); font-style: normal; }
+.orb-tooltip .cta {
+  margin-top: 8px;
+  display: flex; gap: 6px;
+}
+.orb-tooltip .cta button {
+  flex: 1; padding: 5px 8px;
+  border-radius: 7px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.orb-tooltip .cta .primary {
+  background: var(--ember-600); color: #fff; border-color: transparent;
+}
+
+/* Privacy ribbon */
+.privacy-strip {
+  margin-top: 40px;
+  padding: 16px 20px;
+  border-radius: var(--lg-radius-lg);
+  background: linear-gradient(90deg, rgba(95,138,100,0.10), rgba(95,138,100,0.04));
+  border: 1px solid rgba(95,138,100,0.18);
+  display: flex; gap: 18px; align-items: center;
+}
+.privacy-strip .icon {
+  width: 44px; height: 44px;
+  border-radius: 13px;
+  background: rgba(95,138,100,0.16);
+  display: grid; place-items: center;
+  color: var(--moss-400);
+}
+.privacy-strip .icon svg { width: 22px; height: 22px; }
+.privacy-strip .text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.privacy-strip .text strong { color: var(--moss-400); }
+.privacy-strip .badges {
+  display: flex; gap: 6px;
+}
+.privacy-strip .badges .pill {
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: var(--lg-radius-pill);
+  background: rgba(0,0,0,0.2);
+  color: var(--moss-400);
+  border: 1px solid rgba(95,138,100,0.25);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Footer */
+.footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.footer a { color: var(--ember-400); text-decoration: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orb, .recall-card { animation: none !important; }
+}
+
+/* ---- icon helpers ---- */
+.svg-i { display: inline-block; vertical-align: middle; line-height: 0; }
+.svg-i svg { display: block; }
+.svg-i.s-12 svg { width: 12px; height: 12px; }
+.svg-i.s-14 svg { width: 14px; height: 14px; }
+.svg-i.s-16 svg { width: 16px; height: 16px; }
+.svg-i.s-18 svg { width: 18px; height: 18px; }
+.svg-i.s-20 svg { width: 20px; height: 20px; }
+.svg-i.s-22 svg { width: 22px; height: 22px; }
+.svg-i.s-28 svg { width: 28px; height: 28px; }
+.svg-i.s-44 svg { width: 44px; height: 44px; }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     SVG icon defs — used via <use href="#i-..."/>.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-brand" viewBox="0 0 24 24">
+      <path d="M3 11 Q3 9 5 9 L19 9 Q21 9 21 11 L20 16 Q19 20 16 20 L8 20 Q5 20 4 16 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M12 3 C9 7 8 9 9 12 C9.6 14 11 14.6 12 14.6 C13 14.6 14.4 14 15 12 C16 9 15 7 12 3 Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-save" viewBox="0 0 24 24">
+      <path d="M7 4 L17 4 Q18 4 18 5 L18 20 L12 16 L6 20 L6 5 Q6 4 7 4 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <path d="M12 3 L13.5 8.2 L18.5 9.5 L13.5 10.8 L12 16 L10.5 10.8 L5.5 9.5 L10.5 8.2 Z" fill="currentColor"/>
+      <path d="M19 14 L19.7 16 L21.5 16.6 L19.7 17.2 L19 19.2 L18.3 17.2 L16.5 16.6 L18.3 16 Z" fill="currentColor" opacity="0.7"/>
+      <path d="M5 17 L5.6 18.6 L7 19.1 L5.6 19.6 L5 21 L4.4 19.6 L3 19.1 L4.4 18.6 Z" fill="currentColor" opacity="0.55"/>
+    </symbol>
+    <symbol id="i-thread" viewBox="0 0 24 24">
+      <path d="M8 7 Q4 7 4 11 Q4 15 8 15 L11 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M16 9 L13 9 Q9 9 9 13 Q9 17 13 17 L16 17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/>
+      <path d="M16 17 Q20 17 20 13 Q20 9 16 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-feather" viewBox="0 0 24 24">
+      <path d="M19 5 Q14 5 10 9 Q6 13 6 18 L7.5 16.5 Q11 13 14 12 Q11 14 9 17 L11 17 Q15 17 18 14 Q21 11 21 7 Q21 5 19 5 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M6 18 L4 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24">
+      <path d="M12 3 C9 7 7.5 10 8 13 Q9 17 12 18 Q15 17 16 13 C16.5 10 15 7 12 3 Z" fill="currentColor"/>
+      <path d="M12 9 C10.6 11 10 12.5 10.4 14 Q11 16 12 16 Q13 16 13.6 14 C14 12.5 13.4 11 12 9 Z" fill="rgba(255,255,255,0.55)"/>
+    </symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24">
+      <path d="M5 19 Q5 9 14 5 Q19 4 19 9 Q19 18 9 19 Q5 19 5 19 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M14 8 Q10 12 7 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24">
+      <rect x="6" y="4" width="12" height="17" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M9 4 Q9 2.5 10.5 2.5 L13.5 2.5 Q15 2.5 15 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <path d="M2 12 Q7 5 12 5 Q17 5 22 12 Q17 19 12 19 Q7 19 2 12 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    </symbol>
+    <symbol id="i-image" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="9" cy="10" r="1.5" fill="currentColor"/>
+      <path d="M3 17 L8 12 L13 16 L17 12 L21 17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-tab" viewBox="0 0 24 24">
+      <rect x="3" y="6" width="14" height="14" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M7 6 L7 4 Q7 3 8 3 L18 3 Q19 3 19 4 L19 14 Q19 15 18 15 L17 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M16 16 L21 21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <path d="M12 3 L20 6 L20 12 Q20 18 12 21 Q4 18 4 12 L4 6 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M9 12 L11.4 14.4 L15 10.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="M5 12 L10 17 L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-cross" viewBox="0 0 24 24">
+      <path d="M6 6 L18 18 M18 6 L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+
+<!-- ====== Brand hero ====== -->
+<header class="brand-hero">
+    <div class="brand-mark">
+      <span class="glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><use href="#i-brand"/></svg>
+      </span>
+      <span>Hearth</span>
+    </div>
+  <p class="brand-tag">
+    Your reading, remembered. <em>Quietly.</em>
+  </p>
+</header>
+
+<!-- ====== Section 1: Sidepanel + Chat ====== -->
+<div class="section-title"><span class="num">01</span><span>SIDEPANEL · 库与召回</span></div>
+
+<div class="grid">
+
+  <!-- LEFT: Sidepanel -->
+  <aside class="sidepanel" aria-label="Hearth Sidepanel">
+
+    <div class="sp-titlebar">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none"><use href="#i-brand"/></svg></span>
+      <span class="name">Hearth</span>
+      <span class="count">1,243 notes · 184 sources</span>
+    </div>
+
+    <div class="sp-tabs" role="tablist">
+      <div class="sp-tab" aria-selected="true">
+        <span class="svg-i s-14"><svg viewBox="0 0 24 24" fill="none"><use href="#i-leaf"/></svg></span>
+        Library
+      </div>
+      <div class="sp-tab">
+        <span class="svg-i s-14"><svg viewBox="0 0 24 24" fill="none"><use href="#i-spark"/></svg></span>
+        Chat
+      </div>
+      <div class="sp-tab">
+        <span class="svg-i s-14"><svg viewBox="0 0 24 24" fill="none"><use href="#i-clip"/></svg></span>
+        Inbox <span style="color:var(--ember-400); font-family:'JetBrains Mono';">·7</span>
+      </div>
+      <div class="sp-tab">
+        <span class="svg-i s-14"><svg viewBox="0 0 24 24" fill="none"><use href="#i-thread"/></svg></span>
+        Skills
+      </div>
+    </div>
+
+    <div class="sp-search">
+      <span class="svg-i s-14" style="color:var(--text-tertiary);"><svg viewBox="0 0 24 24" fill="none"><use href="#i-search"/></svg></span>
+      <span>搜索你的知识库……</span>
+      <span class="kbd">⌘K</span>
+    </div>
+
+    <div class="sp-body">
+
+      <!-- Recall hero -->
+      <div class="recall-card">
+        <div class="lead"><span class="dot"></span> Hearth 想起来了</div>
+        <div class="narrative">
+          你 3 周前读 SQLite WAL 的时候也碰过这个并发问题，<br>
+          当时你写下 <em>"fsync 才是真瓶颈"</em>。要看那段吗？
+        </div>
+        <div class="candidates">
+          <div class="candidate">
+            <span class="svg-i s-14" style="color:var(--ember-400);"><svg viewBox="0 0 24 24" fill="none"><use href="#i-thread"/></svg></span>
+            <span class="title">WAL 模式下的 fsync 行为</span>
+            <span class="meta">21d ago</span>
+          </div>
+          <div class="candidate">
+            <span class="svg-i s-14" style="color:var(--ember-400);"><svg viewBox="0 0 24 24" fill="none"><use href="#i-thread"/></svg></span>
+            <span class="title">SQLite 并发写锁的两难</span>
+            <span class="meta">28d ago</span>
+          </div>
+          <div class="candidate">
+            <span class="svg-i s-14" style="color:var(--ember-400);"><svg viewBox="0 0 24 24" fill="none"><use href="#i-thread"/></svg></span>
+            <span class="title">为什么 WAL 比 rollback journal 快</span>
+            <span class="meta">42d ago</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stat-ribbon">
+        <div class="stat"><span class="num">17</span><span class="label">本周</span></div>
+        <div class="stat"><span class="num">82</span><span class="label">本月</span></div>
+        <div class="stat"><span class="num">23</span><span class="label">星标</span></div>
+        <div class="stat"><span class="num">9</span><span class="label">主题</span></div>
+      </div>
+
+      <!-- Notes timeline -->
+      <div style="margin-top:14px;">
+        <div style="font-size:11px; color:var(--text-tertiary); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px;">
+          今天
+        </div>
+
+        <div class="note">
+          <div class="head">
+            <span class="fav"></span>
+            <span class="site">developer.mozilla.org</span>
+            <span class="time">14:32</span>
+          </div>
+          <div class="body">
+            模块化 service worker 在 <span class="hl">type: 'module'</span> 下支持
+            <span class="hl">import</span> 语法，但只能在 manifest v3 中使用。
+          </div>
+          <div class="foot">
+            <span class="tag ember">Chrome MV3</span>
+            <span class="tag">javascript</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="head">
+            <span class="fav" style="background:#5a8a6a;"></span>
+            <span class="site">arxiv.org · 2024.11</span>
+            <span class="time">11:08</span>
+          </div>
+          <div class="body">
+            Hybrid retrieval consistently outperforms pure dense retrieval when the corpus
+            contains domain terminology — a pattern we observed in <span class="hl hl-sage">our SQLite-WAL benchmarks</span>.
+          </div>
+          <div class="annot">
+            像我们用 FTS5+SimHash 一样，纯向量未必赢。
+          </div>
+          <div class="foot">
+            <span class="tag ember">RAG</span>
+            <span class="tag">retrieval</span>
+            <span class="tag moss">★ starred</span>
+          </div>
+        </div>
+
+        <div style="font-size:11px; color:var(--text-tertiary); letter-spacing:0.12em; text-transform:uppercase; margin:14px 0 8px;">
+          昨天
+        </div>
+
+        <div class="note">
+          <div class="head">
+            <span class="fav" style="background:#7a5ec0;"></span>
+            <span class="site">obsidian.md · forum</span>
+            <span class="time">22:14</span>
+          </div>
+          <div class="body">
+            "<span class="hl hl-sky">A second brain doesn't help if it's not actually a second.</span>
+            It has to be where your first brain runs into limits."
+          </div>
+          <div class="foot">
+            <span class="tag ember">知识管理</span>
+            <span class="tag">philosophy</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: chat -->
+  <div class="right">
+
+    <div class="chat-window">
+      <div class="chat-head">
+        <div class="title">围炉对话</div>
+        <span class="ctx">上下文 · 3 篇笔记</span>
+        <span class="model">claude-sonnet-4-6</span>
+      </div>
+
+      <div class="chat-body">
+        <div class="msg user">
+          <div class="avatar">你</div>
+          <div class="bubble">
+            把上周关于 RAG hybrid retrieval 的几段串一下，<br>
+            我想看看跟我们 SimHash 那条路有没有冲突。
+          </div>
+        </div>
+
+        <div class="msg assistant">
+          <div class="avatar"><svg viewBox="0 0 24 24" fill="none"><use href="#i-brand"/></svg></div>
+          <div class="bubble">
+            <p>三段是同一条主线：你都在追"语义召回不可独立工作"。</p>
+            <p style="margin-top:8px;">
+              arxiv 那篇说在有专业术语的语料上 hybrid 稳赢 dense；MyMind 工程博客提到
+              用<strong>词频 + 视觉哈希</strong>双通道；你自己 22 号写的批注
+              <em>"FTS5 是底子，向量是补丁"</em> ——三者方向一致。
+            </p>
+            <p style="margin-top:8px;">
+              所以我们的 FTS5 + SimHash 不冲突，反而踩在同一种工程信念上。
+            </p>
+            <div class="cite">
+              引用 · <a href="#">WAL 模式下的 fsync 行为</a> ·
+              <a href="#">Hybrid Retrieval (arxiv)</a> · <a href="#">MyMind 词频/视觉</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="msg user">
+          <div class="avatar">你</div>
+          <div class="bubble">那 SimHash 阈值我该设多少？</div>
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input value="" placeholder="继续问，或拖一段笔记进来…" />
+        <button class="send" title="Send"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12 L19 12 M13 6 L19 12 L13 18"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Inbox + Skills row -->
+    <div class="panel-row">
+
+      <!-- Inbox -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="title">Inbox</span>
+          <span class="count">7 待处理</span>
+          <span class="action">全部清理 →</span>
+        </div>
+
+        <div class="inbox-item">
+          <div class="kind"><svg viewBox="0 0 24 24" fill="none"><use href="#i-clip"/></svg></div>
+          <div class="text">
+            "OPFS allows writing files synchronously inside Web Workers"
+            <span class="meta">developer.chrome.com · 2h ago</span>
+          </div>
+          <div class="actions">
+            <button class="iconbtn" title="入库"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-check"/></svg></button>
+            <button class="iconbtn danger" title="丢弃"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-cross"/></svg></button>
+          </div>
+        </div>
+
+        <div class="inbox-item">
+          <div class="kind"><svg viewBox="0 0 24 24" fill="none"><use href="#i-eye"/></svg></div>
+          <div class="text">
+            停留 8m · 滚动 92% · <span style="color:var(--ember-200);">看上去你想留这篇</span>
+            <span class="meta">"Skill is all you need" — anthropic.com · 4h ago</span>
+          </div>
+          <div class="actions">
+            <button class="iconbtn" title="入库"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-check"/></svg></button>
+            <button class="iconbtn danger" title="丢弃"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-cross"/></svg></button>
+          </div>
+        </div>
+
+        <div class="inbox-item">
+          <div class="kind"><svg viewBox="0 0 24 24" fill="none"><use href="#i-image"/></svg></div>
+          <div class="text">
+            截图 OCR · "Service Worker idle timeout is 30 seconds in MV3"
+            <span class="meta">image_ocr · yesterday 23:18</span>
+          </div>
+          <div class="actions">
+            <button class="iconbtn" title="入库"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-check"/></svg></button>
+            <button class="iconbtn danger" title="丢弃"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-cross"/></svg></button>
+          </div>
+        </div>
+
+        <div class="inbox-item">
+          <div class="kind"><svg viewBox="0 0 24 24" fill="none"><use href="#i-tab"/></svg></div>
+          <div class="text">
+            标签页关闭 · 1 tab held 26 minutes
+            <span class="meta">notion.so / sqlite-wal-explained · yesterday</span>
+          </div>
+          <div class="actions">
+            <button class="iconbtn" title="入库"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-check"/></svg></button>
+            <button class="iconbtn danger" title="丢弃"><svg viewBox="0 0 24 24" width="13" height="13" fill="none"><use href="#i-cross"/></svg></button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Skills -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="title">Skills</span>
+          <span class="count">5 / 5 启用</span>
+          <span class="action">新建 +</span>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-head">
+            <span class="name">weekly-review</span>
+            <span class="ver">v1.0.0</span>
+            <span class="toggle"></span>
+          </div>
+          <div class="desc">每周一上午 9 点把上周高亮聚成 3-5 张主题卡</div>
+          <div class="meta">
+            <span class="trig">CRON · 0 9 * * MON</span>
+            <span class="next">下一次：周一 09:00 ↻</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-head">
+            <span class="name">tag-suggest</span>
+            <span class="ver">v1.0.0</span>
+            <span class="toggle"></span>
+          </div>
+          <div class="desc">新笔记入库后自动建议 3 个标签</div>
+          <div class="meta">
+            <span class="trig">EVENT · note.create</span>
+            <span class="next">最近：12 分钟前 <span class="svg-i s-12" style="color:var(--moss-400);"><svg viewBox="0 0 24 24" fill="none"><use href="#i-check"/></svg></span></span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-head">
+            <span class="name">link-similar</span>
+            <span class="ver">v1.0.0</span>
+            <span class="toggle"></span>
+          </div>
+          <div class="desc">入库后异步寻找库内相关并加 wiki 链接</div>
+          <div class="meta">
+            <span class="trig">EVENT · note.create</span>
+            <span class="next">今日命中：4 条 <span class="svg-i s-12" style="color:var(--moss-400);"><svg viewBox="0 0 24 24" fill="none"><use href="#i-check"/></svg></span></span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-head">
+            <span class="name">inbox-tidy</span>
+            <span class="ver">v1.0.0</span>
+            <span class="toggle off"></span>
+          </div>
+          <div class="desc">每日 22 点清理候选 Inbox，72h 未确认置 expired</div>
+          <div class="meta">
+            <span class="trig">CRON · 0 22 * * *</span>
+            <span class="next" style="color:var(--text-muted);">已暂停</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ====== Section 2: 浏览器内体验 ====== -->
+
+<div class="section-title"><span class="num">02</span><span>页面内 · 浮 BAR + 反向召回小球</span></div>
+
+<div class="browser-mock">
+  <div class="browser-bar">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="url">https://developer.mozilla.org/zh-CN/docs/Web/API/File_System_Access_API</div>
+    <div class="ext-icon" title="Hearth"><svg viewBox="0 0 24 24" fill="none"><use href="#i-brand"/></svg></div>
+  </div>
+  <div class="browser-canvas">
+    <div class="fake-article">
+      <h1>The File System Access API and OPFS in modern Chromium</h1>
+      <p>
+        The File System Access API provides web applications a means of interacting with files on the user's
+        local device.
+        <span class="selection">The Origin Private File System (OPFS) is a storage endpoint that is private to
+        the origin and not exposed via the user-visible file system.</span> It is optimized for performance
+        and provides synchronous file access from within dedicated Web Workers.
+      </p>
+      <p>
+        OPFS files are stored in a sandboxed area, meaning they cannot be accessed by other origins, and
+        users cannot directly view or edit them through the operating system's file picker. This makes OPFS
+        well-suited for cases such as <span class="selection">storing SQLite databases or large media buffers</span>
+        without polluting the user's downloads or document folders.
+      </p>
+    </div>
+
+    <!-- Floating bar (selection toolbar) -->
+    <div class="floatbar" aria-label="Hearth float bar">
+      <button class="primary" title="Save"><svg viewBox="0 0 24 24" fill="none"><use href="#i-save"/></svg></button>
+      <button title="Ask AI"><svg viewBox="0 0 24 24" fill="none"><use href="#i-spark"/></svg></button>
+      <button title="Link to existing"><svg viewBox="0 0 24 24" fill="none"><use href="#i-thread"/></svg></button>
+      <button title="Annotate"><svg viewBox="0 0 24 24" fill="none"><use href="#i-feather"/></svg></button>
+    </div>
+
+    <!-- Recall orb bottom-right -->
+    <div class="orb-zone">
+      <div class="orb-tooltip">
+        <div class="lead">
+          <span class="svg-i s-14"><svg viewBox="0 0 24 24" fill="none"><use href="#i-flame"/></svg></span>
+          Hearth 想起来了
+        </div>
+        <div>
+          你 3 周前读 SQLite WAL 时也想过这个，<br>
+          当时你写下 <em>"OPFS 是新派 SQLite 的家"</em>。
+        </div>
+        <div class="cta">
+          <button>稍后</button>
+          <button class="primary">去看那段 →</button>
+        </div>
+      </div>
+      <div class="orb" title="Hearth recall"><svg viewBox="0 0 24 24" fill="none"><use href="#i-flame"/></svg></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ====== Section 3: Privacy strip ====== -->
+
+<div class="privacy-strip">
+  <div class="icon"><svg viewBox="0 0 24 24" fill="none"><use href="#i-shield"/></svg></div>
+  <div class="text">
+    <strong>本地优先。</strong> 你的高亮、对话、知识库全部存在
+    <strong>你这台设备的 OPFS</strong>，永远不离开浏览器；
+    只有你按下 <strong>问 AI</strong> 时，被选中的那段才会被加密发往你配置的服务。
+  </div>
+  <div class="badges">
+    <span class="pill">SQLite · OPFS</span>
+    <span class="pill">BYO API KEY</span>
+    <span class="pill">0 TELEMETRY</span>
+  </div>
+</div>
+
+
+<footer class="footer">
+  Hearth · v0.0.1 mock · <a href="../docs/PRD.md">PRD</a> ·
+  <a href="../docs/ARCHITECTURE.md">Architecture</a> ·
+  <a href="../docs/SKILL_SPEC.md">Skill Spec</a>
+</footer>
+
+</main>
+</body>
+</html>
