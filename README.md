@@ -1,17 +1,47 @@
-# 🔥 Hearth — Personal Knowledge Companion
+<div align="center">
 
-> *Your reading, remembered.* **Quietly.**
->
-> 把你在网上读过的每一段值得回看的话，
-> 变成一团有温度、会主动找你的知识余烬。
+<img src="docs/promo/readme-hero.png" alt="Hearth — Local-first knowledge companion" width="100%">
 
-🌐 **[telagod.github.io/hearth-ext](https://telagod.github.io/hearth-ext/)** · 演示站  
-📦 **github.com/telagod/hearth-ext** · 仓库
+# 🔥 Hearth
+
+**Your reading, remembered. Quietly.**
+
+把你在网上读过的每一段值得回看的话，
+变成一团有温度、会主动找你的知识余烬。
 
 [![status](https://img.shields.io/badge/status-M6%20shipped-success)](docs/SMOKE.md)
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![chrome](https://img.shields.io/badge/chrome-116%2B-green)]()
+[![tests](https://img.shields.io/badge/tests-74%20passed-brightgreen)](tests/)
 [![local-first](https://img.shields.io/badge/local--first-✓-success)]()
+[![BYOK](https://img.shields.io/badge/BYOK-Anthropic%20·%20OpenAI%20·%20Ollama-ff9b2d)]()
+
+🌐 **[telagod.github.io/hearth-ext](https://telagod.github.io/hearth-ext/)** · 演示站&nbsp;&nbsp;|&nbsp;&nbsp;
+🎨 **[设计稿](https://telagod.github.io/hearth-ext/mockup.html)** &nbsp;&nbsp;|&nbsp;&nbsp;
+📚 **[文档](https://telagod.github.io/hearth-ext/docs.html)**
+
+</div>
+
+---
+
+## 三件事一起做
+
+<table>
+<tr>
+<td width="33%" align="center">
+  <img src="docs/promo/feat-floatbar.png" alt="L1 selection float bar" width="100%"/>
+  <br><sub><b>L1 · 选中即收</b><br/>浮 bar 一秒按下，回头随时回看</sub>
+</td>
+<td width="33%" align="center">
+  <img src="docs/promo/feat-recall.png" alt="L2 reverse recall orb" width="100%"/>
+  <br><sub><b>L2 · 反向召回 ☕</b><br/>新页面命中旧笔记，浮起轻声提醒</sub>
+</td>
+<td width="33%" align="center">
+  <img src="docs/promo/feat-chat.png" alt="Sidepanel chat with citations" width="100%"/>
+  <br><sub><b>围炉对话</b><br/>以你笔记为上下文，引用你自己的话</sub>
+</td>
+</tr>
+</table>
 
 ---
 

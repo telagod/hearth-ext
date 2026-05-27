@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  
+    <defs>
+      <radialGradient id="bg" cx="80%" cy="20%" r="80%">
+        <stop offset="0%" stop-color="#f87b15" stop-opacity="0.40"/>
+        <stop offset="55%" stop-color="#262620"  stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#0c0c09" stop-opacity="1"/>
+      </radialGradient>
+      <radialGradient id="orb" cx="35%" cy="30%" r="65%">
+        <stop offset="0%"  stop-color="#fff3c8"/>
+        <stop offset="35%" stop-color="#ffd89a"/>
+        <stop offset="70%" stop-color="#ff9b2d"/>
+        <stop offset="100%" stop-color="#c0420c" stop-opacity="0.92"/>
+      </radialGradient>
+      <radialGradient id="halo" cx="35%" cy="30%" r="58%">
+        <stop offset="0%"  stop-color="#ff9b2d" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="#ff9b2d" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="card" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="rgba(38,38,32,0.92)"/>
+        <stop offset="100%" stop-color="rgba(28,26,22,0.95)"/>
+      </linearGradient>
+      <linearGradient id="ember-text" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffd89a"/>
+        <stop offset="100%" stop-color="#f87b15"/>
+      </linearGradient>
+      <linearGradient id="ember-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ff9b2d"/>
+        <stop offset="100%" stop-color="#e85d0a"/>
+      </linearGradient>
+      <symbol id="brand" viewBox="0 0 24 24">
+        <path d="M3 11 Q3 9 5 9 L19 9 Q21 9 21 11 L20 16 Q19 20 16 20 L8 20 Q5 20 4 16 Z"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M12 3 C9 7 8 9 9 12 C9.6 14 11 14.6 12 14.6 C13 14.6 14.4 14 15 12 C16 9 15 7 12 3 Z"
+              fill="currentColor"/>
+      </symbol>
+      <symbol id="flame" viewBox="0 0 24 24">
+        <path d="M12 3 C9 7 7.5 10 8 13 Q9 17 12 18 Q15 17 16 13 C16.5 10 15 7 12 3 Z" fill="currentColor"/>
+      </symbol>
+      <symbol id="save" viewBox="0 0 24 24">
+        <path d="M7 4 L17 4 Q18 4 18 5 L18 20 L12 16 L6 20 L6 5 Q6 4 7 4 Z"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="spark" viewBox="0 0 24 24">
+        <path d="M12 3 L13.5 8.2 L18.5 9.5 L13.5 10.8 L12 16 L10.5 10.8 L5.5 9.5 L10.5 8.2 Z" fill="currentColor"/>
+      </symbol>
+      <symbol id="thread" viewBox="0 0 24 24">
+        <path d="M8 7 Q4 7 4 11 Q4 15 8 15 L11 15"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M16 9 L13 9 Q9 9 9 13 Q9 17 13 17 L16 17"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/>
+        <path d="M16 17 Q20 17 20 13 Q20 9 16 9"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="feather" viewBox="0 0 24 24">
+        <path d="M19 5 Q14 5 10 9 Q6 13 6 18 L7.5 16.5 Q11 13 14 12 Q11 14 9 17 L11 17 Q15 17 18 14 Q21 11 21 7 Q21 5 19 5 Z"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M6 18 L4 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="shield" viewBox="0 0 24 24">
+        <path d="M12 3 L20 6 L20 12 Q20 18 12 21 Q4 18 4 12 L4 6 Z"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M9 12 L11.4 14.4 L15 10.6"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="search" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M16 16 L21 21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </symbol>
+      <filter id="grain">
+        <feTurbulence baseFrequency="0.85" numOctaves="2"/>
+        <feColorMatrix values="0 0 0 0 1  0 0 0 0 0.85  0 0 0 0 0.5  0 0 0 0.04 0"/>
+      </filter>
+    </defs>
+  
+    <rect width="800" height="500" fill="url(#bg)"/>
+    <rect width="800" height="500" filter="url(#grain)" opacity="0.6"/>
+
+  <!-- chat window -->
+  <g transform="translate(60, 60)">
+    <rect width="680" height="380" rx="22"
+          fill="url(#card)" stroke="rgba(255,243,220,0.12)"/>
+    <!-- chat head -->
+    <g transform="translate(20, 16)">
+      <text font-size="14" font-weight="700" fill="#f7f7f5" font-family="'Noto Serif SC', 'Inter', system-ui, sans-serif">围炉对话</text>
+      <rect x="78" y="-12" width="100" height="20" rx="10"
+            fill="rgba(95,138,100,0.14)" stroke="rgba(95,138,100,0.30)"/>
+      <text x="128" y="2" text-anchor="middle" font-size="10.5" fill="#85a987" font-family="'JetBrains Mono', ui-monospace, monospace">3 笔记上下文</text>
+      <text x="640" y="0" text-anchor="end" font-size="10.5" fill="#8e8a7a" font-family="'JetBrains Mono', ui-monospace, monospace">claude-sonnet-4-6</text>
+    </g>
+    <line x1="20" y1="44" x2="660" y2="44" stroke="rgba(255,243,220,0.10)"/>
+
+    <!-- user msg -->
+    <g transform="translate(20, 70)">
+      <rect width="26" height="26" rx="8" fill="rgba(48,46,38,0.8)"/>
+      <text x="13" y="18" text-anchor="middle" font-size="11" fill="#d6d4ca" font-family="'Noto Serif SC', 'Inter', system-ui, sans-serif">你</text>
+      <g transform="translate(38, 0)">
+        <rect width="320" height="40" rx="12" fill="rgba(48,46,38,0.7)" stroke="rgba(255,243,220,0.08)"/>
+        <text x="14" y="25" font-size="13.5" fill="#f7f7f5" font-family="'Noto Serif SC', 'Inter', system-ui, sans-serif">把上周关于 RAG 的笔记串一下。</text>
+      </g>
+    </g>
+
+    <!-- assistant msg -->
+    <g transform="translate(20, 130)">
+      <rect width="26" height="26" rx="8" fill="url(#orb)"/>
+      <use href="#brand" x="3" y="3" width="20" height="20" color="rgba(20,18,15,0.85)"/>
+      <g transform="translate(38, 0)">
+        <rect width="600" height="160" rx="12"
+              fill="rgba(255,155,45,0.06)" stroke="rgba(255,155,45,0.18)"/>
+        <text x="14" y="26" font-size="13.5" fill="#f7f7f5" font-family="'Noto Serif SC', 'Inter', system-ui, sans-serif">三段是同一条主线你都在追"语义召回不可独立工作"arxiv 那篇说在专业语料上 hybrid 稳赢 dense</text>
+        <text x="14" y="78" font-size="13.5" fill="#f7f7f5" font-family="'Noto Serif SC', 'Inter', system-ui, sans-serif">你自己 22 号写的批注「FTS5 是底子向量是补丁」三者方向一致</text>
+        <!-- citation block -->
+        <rect x="14" y="118" width="572" height="32" rx="6" fill="rgba(0,0,0,0.20)"/>
+        <text x="24" y="138" font-size="11" fill="#8e8a7a" font-family="'Noto Serif SC', 'Inter', system-ui, sans-serif">引用 ·
+          <tspan fill="#ffd89a">WAL fsync 行为</tspan> ·
+          <tspan fill="#ffd89a">Hybrid Retrieval</tspan> ·
+          <tspan fill="#ffd89a">FTS5 vs vectors</tspan>
+        </text>
+      </g>
+    </g>
+
+    <!-- input bar -->
+    <g transform="translate(20, 320)">
+      <rect width="640" height="40" rx="12" fill="rgba(48,46,38,0.6)" stroke="rgba(255,243,220,0.08)"/>
+      <text x="14" y="25" font-size="13" fill="#8e8a7a" font-family="'Noto Serif SC', 'Inter', system-ui, sans-serif">那 SimHash 阈值我该设多少？</text>
+      <rect x="596" y="4" width="32" height="32" rx="10" fill="url(#ember-fill)"/>
+      <path d="M 605 19 L 619 19 M 615 13 L 619 19 L 615 25"
+            stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </g>
+  </g>
+
+  <text x="60" y="470" font-size="13" fill="#8e8a7a" font-family="'JetBrains Mono', ui-monospace, monospace"
+        letter-spacing="0.2em">CHAT  ·  STREAMING  ·  CITATIONS</text>
+</svg>
