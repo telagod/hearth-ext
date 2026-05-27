@@ -25,6 +25,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Auto-enables GitHub Pages on first run so a fresh fork doesn't see a
+      # red deploy on its initial push. Idempotent — re-runs cost nothing.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Inject repo URL into config.js
         run: |
           REPO_URL="https://github.com/${GITHUB_REPOSITORY}"

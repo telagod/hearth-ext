@@ -14,24 +14,18 @@
 
 1. **创建 GitHub repo**（或 push 到现有 repo）
    ```bash
-   gh repo create hearth --public --source=. --push
+   gh repo create hearth-ext --public --source=. --push
    # 或
    git remote add origin https://github.com/<user>/<repo>.git
    git push -u origin main
    ```
 
-2. **打开 Pages**：repo → Settings → Pages → Source 选 **GitHub Actions**
+2. **就这么多** —— workflow 里 `actions/configure-pages@v5` 会**自动启用 Pages**。
+   你不需要去 Settings → Pages 手动配。
 
-3. **Push 触发部署**：
-   ```bash
-   git add site/ .github/workflows/pages.yml
-   git commit -m "ship: Hearth landing site"
-   git push
-   ```
+3. **看 Actions 跑完**：repo → Actions tab → 2-3 分钟后绿勾
 
-4. **看 Actions 跑完**：repo → Actions tab → 2-3 分钟后绿勾
-
-5. **拿 URL**：
+4. **拿 URL**：
    - 默认：`https://<user>.github.io/<repo>/`
    - 自定义域名：在 `site/CNAME` 写 `hearth.example.com` 再 push
 
@@ -40,6 +34,7 @@
 `.github/workflows/pages.yml`：
 
 - 触发：`push` 到 `main` 且改了 `site/**` 或 workflow 自身
+- **`actions/configure-pages@v5` 自动启用 Pages**（first-time fork 也能直接绿）
 - 单步注入 `REPO_URL` 到 `config.js`（用 `$GITHUB_REPOSITORY`），所以 docs 页的链接全部指向当前 repo
 - `actions/upload-pages-artifact@v3` + `actions/deploy-pages@v4` 标准 GH Pages 流程
 - 并发锁，新 push 会取消还在跑的旧 deploy
@@ -130,7 +125,7 @@ cd site && python3 -m http.server 8765
 
 | 现象 | 解 |
 |---|---|
-| Actions failed: `Pages is not enabled` | repo Settings → Pages → 选 GitHub Actions（一次性） |
+| Actions failed: `Pages is not enabled` | 已被 `configure-pages@v5` 自动处理；如仍报这个，看权限是否被组织限制 |
 | 部署完页面 404 | 等 1-2 分钟 CDN 同步；或检查 Pages source 配对了 |
 | 文档链接还是 `hearth-team/hearth` | 走脚本重 push；或在 GH Actions 看注入步骤是否成功 |
 | 自定义域名 https 红色 | 等 GH 签证，可能需要 1 小时；先用 http 测 |
