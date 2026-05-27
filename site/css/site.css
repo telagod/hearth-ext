@@ -171,6 +171,7 @@ a:hover { color: var(--ember-200); }
   margin-bottom: 24px;
 }
 .hero-eyebrow .dot {
+  flex: 0 0 6px;
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--ember-400);
@@ -297,6 +298,7 @@ a:hover { color: var(--ember-200); }
   letter-spacing: 0.08em;
 }
 .hero-showcase-caption .dot {
+  flex: 0 0 6px;
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--ember-400);
   box-shadow: 0 0 6px var(--ember-400);
@@ -632,18 +634,22 @@ a:hover { color: var(--ember-200); }
   display: grid; gap: 14px;
 }
 .step {
-  display: flex; gap: 18px;
+  display: grid;
+  grid-template-columns: 32px 1fr;   /* fixed badge col + flex content col */
+  gap: 18px;
+  align-items: start;
   padding: 18px 22px;
   background: var(--surface-1);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   transition: border-color 200ms;
-  min-width: 0;       /* allow children to shrink in flex layout */
+  min-width: 0;
 }
-.step > div { min-width: 0; flex: 1; }      /* second column shrinkable */
+.step > div { min-width: 0; }
 .step:hover { border-color: var(--border-strong); }
 .step-n {
-  width: 32px; height: 32px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: linear-gradient(180deg, var(--ember-400), var(--ember-600));
   display: grid; place-items: center;
@@ -651,7 +657,6 @@ a:hover { color: var(--ember-200); }
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-weight: 600;
   font-size: 13px;
-  flex-shrink: 0;
 }
 .step h4 {
   font-family: 'Noto Serif SC', serif;
