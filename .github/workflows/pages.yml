@@ -27,8 +27,11 @@ jobs:
 
       # Auto-enables GitHub Pages on first run so a fresh fork doesn't see a
       # red deploy on its initial push. Idempotent — re-runs cost nothing.
+      # `enablement: true` is the magic flag that triggers Pages provisioning.
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Inject repo URL into config.js
         run: |
