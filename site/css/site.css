@@ -53,7 +53,7 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-html, body { min-height: 100%; }
+html, body { min-height: 100%; overflow-x: hidden; }
 body {
   font-family: 'Inter', 'Noto Serif SC', system-ui, sans-serif;
   font-size: 15px;
@@ -638,7 +638,9 @@ a:hover { color: var(--ember-200); }
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   transition: border-color 200ms;
+  min-width: 0;       /* allow children to shrink in flex layout */
 }
+.step > div { min-width: 0; flex: 1; }      /* second column shrinkable */
 .step:hover { border-color: var(--border-strong); }
 .step-n {
   width: 32px; height: 32px;
@@ -662,7 +664,16 @@ a:hover { color: var(--ember-200); }
   padding: 10px 14px;
   margin-top: 6px;
   overflow-x: auto;
+  max-width: 100%;         /* don't let the pre block widen its parent */
+  white-space: pre;
   border: 1px solid var(--border-subtle);
+}
+.step pre code {
+  white-space: pre-wrap;    /* on mobile, prefer wrapping long lines */
+  word-break: break-all;
+}
+@media (min-width: 600px) {
+  .step pre code { white-space: pre; word-break: normal; }
 }
 .step code, code {
   font-family: 'JetBrains Mono', ui-monospace, monospace;

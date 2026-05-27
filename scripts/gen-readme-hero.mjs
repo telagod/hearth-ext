@@ -167,24 +167,33 @@ function heroSvg() {
   ];
 
   function renderNote(n, y) {
+    // Body lines limited to 2 (note card height = 92px, leaves room for tags).
+    const tagFontSize = 9.5;
+    const tagPadX = 8;
+    let tagOffset = 0;
+    const tagBlocks = n.tags.map((tag) => {
+      const labelW = measureWidth(tag, tagFontSize);
+      const w = labelW + tagPadX * 2;
+      const block = `
+        <rect x="${tagOffset}" y="0" width="${w}" height="14" rx="7"
+              fill="rgba(255,155,45,0.14)" stroke="rgba(255,155,45,0.3)"/>
+        <text x="${tagOffset + w / 2}" y="10" text-anchor="middle"
+              font-size="${tagFontSize}" fill="${PALETTE.ember_200}" ${FONTS}>${esc(tag)}</text>`;
+      tagOffset += w + 6;
+      return block;
+    }).join('');
+
     return `
       <g transform="translate(0, ${y})">
         <rect x="0" y="0" width="${spW - 32}" height="92" rx="10"
               fill="rgba(38,36,30,0.88)" stroke="rgba(255,243,220,0.08)"/>
         <circle cx="14" cy="14" r="4" fill="${PALETTE.ember_600}"/>
-        <text x="26" y="18" font-size="10.5" fill="${PALETTE.ink_300}" ${FONTS}>${n.site}</text>
-        <text x="${spW - 50}" y="18" font-size="10" fill="${PALETTE.ink_400}" ${FONT_MONO} text-anchor="end">${n.time}</text>
-        ${n.starred ? `<polygon points="${spW - 36},10 ${spW - 33},16 ${spW - 27},17 ${spW - 31},22 ${spW - 30},28 ${spW - 36},25 ${spW - 42},28 ${spW - 41},22 ${spW - 45},17 ${spW - 39},16" fill="${PALETTE.ember_400}"/>` : ''}
-        ${wrapText(n.body, spW - 30, 48, 38, 12.5, PALETTE.ink_50)}
+        <text x="26" y="18" font-size="10.5" fill="${PALETTE.ink_300}" ${FONTS}>${esc(n.site)}</text>
+        <text x="${spW - 50}" y="18" font-size="10" fill="${PALETTE.ink_400}" ${FONT_MONO} text-anchor="end">${esc(n.time)}</text>
+        ${n.starred ? `<polygon points="${spW - 50},10 ${spW - 47},16 ${spW - 41},17 ${spW - 45},22 ${spW - 44},28 ${spW - 50},25 ${spW - 56},28 ${spW - 55},22 ${spW - 59},17 ${spW - 53},16" fill="${PALETTE.ember_400}"/>` : ''}
+        ${wrapText(n.body, spW - 50, 14, 38, 11.5, PALETTE.ink_50, 2)}
         <g transform="translate(14, 76)">
-          ${n.tags.map((tag, i) => {
-            const xx = i * 78;
-            return `
-              <rect x="${xx}" y="0" width="${tag.length * 7 + 16}" height="14" rx="7"
-                    fill="rgba(255,155,45,0.14)" stroke="rgba(255,155,45,0.3)"/>
-              <text x="${xx + (tag.length * 7 + 16) / 2}" y="10" text-anchor="middle"
-                    font-size="9.5" fill="${PALETTE.ember_200}" ${FONTS}>${esc(tag)}</text>`;
-          }).join('')}
+          ${tagBlocks}
         </g>
       </g>`;
   }
@@ -230,7 +239,7 @@ function heroSvg() {
             letter-spacing="0.16em">HEARTH 想起来了</text>
       ${wrapText(
         '你 3 周前读 SQLite WAL 时也碰过这个并发问题，当时你写下「fsync 才是真瓶颈」。',
-        spW - 56, 14, 42, 13, PALETTE.ink_50
+        spW - 70, 14, 44, 12, PALETTE.ink_50, 4
       )}
     </g>
 
@@ -266,19 +275,21 @@ function heroSvg() {
 
     <!-- chips -->
     <g transform="translate(0, 260)" font-size="13" ${FONTS}>
-      ${chip(0, 0, 'shield', '本地 SQLite + OPFS', PALETTE.moss_400)}
-      ${chip(220, 0, 'spark', 'BYO API Key', PALETTE.moss_400)}
-      ${chip(380, 0, 'feather', 'MIT Open Source', PALETTE.moss_400)}
+      ${chipRow([
+        { iconId: 'shield',  label: '本地 SQLite + OPFS' },
+        { iconId: 'spark',   label: 'BYO API Key' },
+        { iconId: 'feather', label: 'MIT Open Source' },
+      ], PALETTE.moss_400, 8)}
     </g>
 
     <!-- features grid -->
     <g transform="translate(0, 320)">
-      ${miniCard(0,   0, 'L0', '寄生候选', '后台默默落 Inbox', PALETTE.ink_400)}
-      ${miniCard(170, 0, 'L1', '选中浮 bar', '一秒按一下', PALETTE.ink_400)}
-      ${miniCard(340, 0, 'L2', '反向召回 ☕', '旧笔记主动找你', PALETTE.ember_400)}
-      ${miniCard(0,   100, 'L3', '周回顾', '5 分钟一次', PALETTE.ink_400)}
-      ${miniCard(170, 100, '🔥', 'LSH 144×', '比全扫快', PALETTE.ink_400)}
-      ${miniCard(340, 100, '🛡', '出网审计', '每次都登账', PALETTE.ink_400)}
+      ${miniCard(0,   0,   'L0',   '寄生候选',     '后台默默落 Inbox',  PALETTE.ink_400)}
+      ${miniCard(170, 0,   'L1',   '选中浮 bar',   '一秒按一下',        PALETTE.ink_400)}
+      ${miniCard(340, 0,   'L2',   '反向召回',     '旧笔记主动找你',    PALETTE.ember_400)}
+      ${miniCard(0,   100, 'L3',   '周回顾',       '5 分钟一次',        PALETTE.ink_400)}
+      ${miniCard(170, 100, 'LSH',  '144× 加速',    '比全扫快',          PALETTE.ink_400)}
+      ${miniCard(340, 100, 'AUDIT','出网逐条审计', '每次都登账',        PALETTE.ink_400)}
     </g>
 
     <!-- floating orb tooltip with arrow -->
@@ -303,14 +314,31 @@ function heroSvg() {
 }
 
 function chip(x, y, iconId, label, iconColor) {
-  const w = label.length * 9 + 50;
-  return `
+  const fontSize = 13;
+  const labelW = measureWidth(label, fontSize);
+  const w = 14 + 14 + 6 + labelW + 14;       // padL + icon + gap + text + padR
+  return {
+    width: w,
+    svg: `
     <g transform="translate(${x}, ${y})">
       <rect width="${w}" height="28" rx="14"
             fill="rgba(28,26,22,0.7)" stroke="rgba(255,243,220,0.14)"/>
       <use href="#${iconId}" x="9" y="6" width="14" height="14" color="${iconColor}"/>
-      <text x="29" y="19" fill="${PALETTE.ink_200}" ${FONTS} font-size="12.5">${esc(label)}</text>
-    </g>`;
+      <text x="29" y="19" fill="${PALETTE.ink_200}" ${FONTS} font-size="${fontSize}">${esc(label)}</text>
+    </g>`,
+  };
+}
+
+/**
+ * Render a row of chips with proper width-aware spacing.
+ */
+function chipRow(items, iconColor, gap = 8) {
+  let x = 0;
+  return items.map((it) => {
+    const c = chip(x, 0, it.iconId, it.label, iconColor);
+    x += c.width + gap;
+    return c.svg;
+  }).join('');
 }
 
 function miniCard(x, y, badge, title, sub, badgeColor) {
@@ -371,7 +399,7 @@ function featRecallSvg() {
           letter-spacing="0.14em">HEARTH 想起来了</text>
     ${wrapText(
       '你 3 周前读 SQLite WAL 时也想过这个，当时你写下「OPFS 是新派 SQLite 的家」。',
-      256, 14, 50, 13.5, PALETTE.ink_50
+      252, 14, 48, 12.5, PALETTE.ink_50, 4
     )}
     <g transform="translate(14, 100)">
       <rect width="115" height="26" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,243,220,0.10)"/>
@@ -477,11 +505,11 @@ function featChatSvg() {
               fill="rgba(255,155,45,0.06)" stroke="rgba(255,155,45,0.18)"/>
         ${wrapText(
           '三段是同一条主线：你都在追"语义召回不可独立工作"。arxiv 那篇说在专业语料上 hybrid 稳赢 dense；',
-          580, 14, 26, 13.5, PALETTE.ink_50
+          572, 14, 26, 13, PALETTE.ink_50, 3
         )}
         ${wrapText(
           '你自己 22 号写的批注「FTS5 是底子，向量是补丁」——三者方向一致。',
-          580, 14, 78, 13.5, PALETTE.ink_50
+          572, 14, 80, 13, PALETTE.ink_50, 3
         )}
         <!-- citation block -->
         <rect x="14" y="118" width="572" height="32" rx="6" fill="rgba(0,0,0,0.20)"/>
@@ -517,27 +545,72 @@ function esc(s) {
 }
 
 /**
- * Crude word-wrap into multiple <text> tspans. Returns SVG markup.
+ * Per-character width estimate (in fontSize units).
+ * SVG <text> with a sans-serif body font wraps roughly:
+ *   - CJK / fullwidth punct  ≈ 1.00 em
+ *   - ASCII letters          ≈ 0.55 em
+ *   - digits & uppercase     ≈ 0.60 em
+ *   - whitespace             ≈ 0.30 em
  */
-function wrapText(text, maxWidth, x, y, fontSize, color) {
-  const charW = fontSize * 0.55;     // rough proportional width estimate
-  const maxChars = Math.floor(maxWidth / charW);
-  const lineHeight = fontSize * 1.5;
+function charWidth(ch) {
+  const c = ch.codePointAt(0);
+  if (c === undefined) return 0;
+  // CJK Unified, Compat, Hiragana, Katakana, Hangul ranges + fullwidth punct.
+  if (
+    (c >= 0x3000 && c <= 0x9fff) ||   // CJK Symbols + Hiragana/Katakana + CJK
+    (c >= 0xac00 && c <= 0xd7af) ||   // Hangul
+    (c >= 0xf900 && c <= 0xfaff) ||   // CJK Compat
+    (c >= 0xff00 && c <= 0xff60) ||   // Fullwidth Latin
+    (c >= 0xffe0 && c <= 0xffe6)
+  ) return 1.00;
+  if (ch === ' ' || ch === '\t') return 0.30;
+  if (/[0-9A-Z]/.test(ch)) return 0.62;
+  if (/[a-z]/.test(ch)) return 0.55;
+  if (/[—–·…「」“”‘’『』《》]/.test(ch)) return 0.95;
+  return 0.50;
+}
+
+function measureWidth(s, fontSize) {
+  let w = 0;
+  for (const ch of s) w += charWidth(ch) * fontSize;
+  return w;
+}
+
+/**
+ * Word-wrap into multiple <text> elements with proper width-aware breaks.
+ * Returns SVG markup. Truncates with "…" if more than `maxLines`.
+ */
+function wrapText(text, maxWidth, x, y, fontSize, color, maxLines = 6) {
+  const lineHeight = fontSize * 1.55;
   const lines = [];
-  let cur = '';
-  // Mix of ASCII words and CJK chars; treat CJK as single "words".
-  const tokens = text.match(/[A-Za-z0-9'"!?,.\-:;()“”「」]+|[一-鿿]|\s+/g) ?? [];
+  // Tokenize: ASCII word chunks, single CJK chars, whitespace, or single fallback char.
+  const tokens = text.match(/[A-Za-z0-9'"!?,.\-:;()]+|[一-鿿々〆「」“”‘’《》]|\s+|./g) ?? [];
+
+  let curLine = '';
+  let curWidth = 0;
   for (const tok of tokens) {
-    const tentative = cur + tok;
-    // accept whitespace freely; for others, check length
-    if (tentative.length > maxChars && cur.trim()) {
-      lines.push(cur.trimEnd());
-      cur = /^\s/.test(tok) ? '' : tok;
+    const tokW = measureWidth(tok, fontSize);
+    if (curLine && curWidth + tokW > maxWidth) {
+      lines.push(curLine.trimEnd());
+      curLine = /^\s+$/.test(tok) ? '' : tok;
+      curWidth = curLine ? tokW : 0;
     } else {
-      cur = tentative;
+      curLine += tok;
+      curWidth += tokW;
     }
+    if (lines.length >= maxLines) break;
   }
-  if (cur.trim()) lines.push(cur);
+  if (curLine.trim() && lines.length < maxLines) lines.push(curLine.trimEnd());
+
+  // If we hit the cap and there's more, append ellipsis on the last line.
+  if (lines.length === maxLines) {
+    let last = lines[maxLines - 1] ?? '';
+    while (measureWidth(last + '…', fontSize) > maxWidth && last.length > 1) {
+      last = last.slice(0, -1);
+    }
+    lines[maxLines - 1] = last + '…';
+  }
+
   return lines.map((ln, i) =>
     `<text x="${x}" y="${y + i * lineHeight}" font-size="${fontSize}" fill="${color}" ${FONTS}>${esc(ln)}</text>`
   ).join('');
